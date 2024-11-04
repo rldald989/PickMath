@@ -20,7 +20,7 @@ float det3(Matrix3 mat3){
     Matrix2 a(mat3.rowB.y, mat3.rowB.z, mat3.rowC.y, mat3.rowC.z);
     Matrix2 b(mat3.rowB.x, mat3.rowB.z, mat3.rowC.x, mat3.rowC.z);
     Matrix2 c(mat3.rowB.x, mat3.rowB.y, mat3.rowC.x, mat3.rowC.y);
-    return det2(a) - det2(b) + det2(c);
+    return (mat3.rowA.x * det2(a)) - (mat3.rowA.y * det2(b)) + (mat3.rowA.z * det2(c));
 }
 
 std::string _matrix3_(Matrix3 composition){
@@ -30,11 +30,40 @@ std::string _matrix3_(Matrix3 composition){
     + "[" + vector3_to_string(composition.rowC) + "]\n");
 }
 
-Vector2 camer_solve_transform(Matrix2 transformMat, Vector2 transformedCoords)
+Vector2 cramer_solve_transform(Matrix2 transformMat, Vector2 transformedCoords)
 {
     float y = det2(Matrix2(transformMat.a, transformedCoords.m_x, transformMat.c, transformedCoords.m_y)) / det2(transformMat);
     float x = det2(Matrix2(transformedCoords.m_x, transformMat.b, transformedCoords.m_y, transformMat.d)) / det2(transformMat);
     return Vector2(x, y);
+}
+
+Vector3 cramer_solve_transform_3(Matrix3 transformMat, Vector3 transformedCoords)
+{
+    float x = det3(
+        Matrix3(
+            Vector3(transformedCoords.x, transformMat.rowA.y, transformMat.rowA.z),
+            Vector3(transformedCoords.y, transformMat.rowB.y, transformMat.rowB.z),
+            Vector3(transformedCoords.z, transformMat.rowC.y, transformMat.rowC.z)
+        )
+    ) / det3(transformMat);
+
+    float y = det3(
+        Matrix3(
+            Vector3(transformMat.rowA.x, transformedCoords.x, transformMat.rowA.z),
+            Vector3(transformMat.rowB.x, transformedCoords.y,  transformMat.rowB.z),
+            Vector3(transformMat.rowC.x, transformedCoords.z,  transformMat.rowC.z)
+        )
+    ) / det3(transformMat);
+
+    float z = det3(
+        Matrix3(
+            Vector3(transformMat.rowA.x, transformMat.rowA.y, transformedCoords.x),
+            Vector3(transformMat.rowB.x, transformMat.rowB.y, transformedCoords.y),
+            Vector3(transformMat.rowC.x, transformMat.rowC.y, transformedCoords.z)
+        )
+    ) / det3(transformMat);
+
+    return Vector3(x, y, z);
 }
 
 int main(){
@@ -50,16 +79,17 @@ int main(){
     // Rotation matrix: [cos(v) -sin(v)]
     //                  [sin(v)  cos(v)]
 
-    Vector2 a_(4, 3);
-    Vector2 b_(1, 2);
+    Matrix3 transform(
+        Vector3(3, 2, -7),
+        Vector3(1, 2, -4),
+        Vector3(4, 0, 1)
+    );
 
-    Matrix2 transform(cosf(30), -sinf(30), sinf(30), cosf(30));
+    Vector3 transformed(4, 2, 5);
 
-    Vector2 transformedVector = a_ * transform;
-
-    std::cout << "Vector3 originalVector: " << vector2_to_string(a_) << std::endl;
-    std::cout << "Vector3 transformedVector: " << vector2_to_string(transformedVector) << std::endl;
-    std::cout << "Vector3 solvedVector: " << vector2_to_string(camer_solve_transform(transform, transformedVector)) << std::endl;
+    std::cout << vector3_to_string(cramer_solve_transform_3(transform, transformed)) << std::endl;
 
     return 0;
 }
+
+//g++ main.cpp files/Vector/Vector2.cpp files/Vector/Vector3.cpp files/Matrix/Matrix2.cpp files/Matrix/Matrix3.cpp -o main

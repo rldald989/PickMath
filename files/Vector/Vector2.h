@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string>
+
 class Vector2
 {
 private:
@@ -18,4 +20,6 @@ public:
 
     float dot(Vector2& other);
     float det(Vector2& other);
+
+    static std::string to_string(Vector2 a);
 };

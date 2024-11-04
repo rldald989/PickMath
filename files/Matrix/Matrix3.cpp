@@ -3,7 +3,7 @@
 Matrix3::Matrix3(Vector3 _rowA, Vector3 _rowB, Vector3 _rowC) : 
 rowA(_rowA),
 rowB(_rowB),
-rowC(_rowC), determinant()
+rowC(_rowC)
 {
     
 }
@@ -38,4 +38,49 @@ Matrix3 Matrix3::operator*(Matrix3 &other)
     );
 
     return reOrdered;
+}
+
+std::string Matrix3::to_string(Matrix3 composition)
+{
+    return std::string(
+      "[" + Vector3::to_string(composition.rowA) + "]\n" +
+    + "[" + Vector3::to_string(composition.rowB) + "]\n"
+    + "[" + Vector3::to_string(composition.rowC) + "]\n");
+}
+
+float Matrix3::det3(Matrix3 mat3)
+{
+    Matrix2 a(mat3.rowB.y, mat3.rowB.z, mat3.rowC.y, mat3.rowC.z);
+    Matrix2 b(mat3.rowB.x, mat3.rowB.z, mat3.rowC.x, mat3.rowC.z);
+    Matrix2 c(mat3.rowB.x, mat3.rowB.y, mat3.rowC.x, mat3.rowC.y);
+    return (mat3.rowA.x * Matrix2::det2(a)) - (mat3.rowA.y * Matrix2::det2(b)) + (mat3.rowA.z * Matrix2::det2(c));
+}
+
+Vector3 Matrix3::cramer_solve_transform(Matrix3 transformMat, Vector3 transformedCoords)
+{
+    float x = det3(
+        Matrix3(
+            Vector3(transformedCoords.x, transformMat.rowA.y, transformMat.rowA.z),
+            Vector3(transformedCoords.y, transformMat.rowB.y, transformMat.rowB.z),
+            Vector3(transformedCoords.z, transformMat.rowC.y, transformMat.rowC.z)
+        )
+    ) / det3(transformMat);
+
+    float y = det3(
+        Matrix3(
+            Vector3(transformMat.rowA.x, transformedCoords.x, transformMat.rowA.z),
+            Vector3(transformMat.rowB.x, transformedCoords.y,  transformMat.rowB.z),
+            Vector3(transformMat.rowC.x, transformedCoords.z,  transformMat.rowC.z)
+        )
+    ) / det3(transformMat);
+
+    float z = det3(
+        Matrix3(
+            Vector3(transformMat.rowA.x, transformMat.rowA.y, transformedCoords.x),
+            Vector3(transformMat.rowB.x, transformMat.rowB.y, transformedCoords.y),
+            Vector3(transformMat.rowC.x, transformMat.rowC.y, transformedCoords.z)
+        )
+    ) / det3(transformMat);
+
+    return Vector3(x, y, z);
 }

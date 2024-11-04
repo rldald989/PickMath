@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../Vector/Vector3.h"
+#include "../Matrix/Matrix2.h"
 
 class Matrix3
 {
@@ -16,4 +17,10 @@ public:
     friend Vector3 operator*(const Vector3& v, const Matrix3& m);
 
     Matrix3 operator*(Matrix3& other);
+
+    static std::string to_string(Matrix3 composition);
+
+    static float det3(Matrix3 mat3);
+
+    static Vector3 cramer_solve_transform(Matrix3 transformMat, Vector3 transformedCoords);
 };

@@ -41,3 +41,8 @@ Vector3 Vector3::cross(Vector3 &other)
         (x * other.y) - (other.x - y)
     );
 }
+
+std::string Vector3::to_string(Vector3 a)
+{
+    return std::string(std::to_string(a.x) + " " + std::to_string(a.y) + " " + std::to_string(a.z));
+}

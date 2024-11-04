@@ -19,4 +19,9 @@ public:
     
     Matrix2 operator*(Matrix2& other);
 
+    static std::string to_string(Matrix2 composition);
+
+    static float det2(Matrix2 mat2);
+
+    static Vector2 cramer_solve_transform(Matrix2 transformMat, Vector2 transformedCoords);
 };

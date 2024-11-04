@@ -15,4 +15,7 @@ public:
     Vector2 operator-(Vector2& other);
     Vector2 operator*(Vector2& other);
     Vector2 operator/(Vector2& other);
+
+    float dot(Vector2& other);
+    float det(Vector2& other);
 };

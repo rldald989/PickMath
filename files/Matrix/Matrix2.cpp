@@ -8,7 +8,6 @@ Matrix2::~Matrix2()
 {
 }
 
-
 Vector2 operator*(const Vector2 &v, const Matrix2 &m)
 {
     return Vector2((m.a * v.m_x) + (m.b * v.m_y), (m.c * v.m_x) + (m.d * v.m_y));

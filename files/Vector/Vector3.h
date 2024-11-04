@@ -16,4 +16,7 @@ public:
     Vector3 operator-(Vector3& other);
     Vector3 operator*(Vector3& other);
     Vector3 operator/(Vector3& other);
+
+    float dot(Vector3& other);
+    Vector3 cross(Vector3& other);
 };

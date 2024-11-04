@@ -11,7 +11,6 @@ private:
     /* data */
 public:
     float a, b, c, d;
-    float determinant;
 
     Matrix2(float _a, float _b, float _c, float _d);
     ~Matrix2();

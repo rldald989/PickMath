@@ -10,8 +10,6 @@ public:
     Vector3 rowB;
     Vector3 rowC;
 
-    float determinant;
-
     Matrix3(Vector3 _rowA, Vector3 _rowB, Vector3 _rowC);
     ~Matrix3();
 

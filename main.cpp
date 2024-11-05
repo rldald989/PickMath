@@ -24,9 +24,16 @@ int main(){
         Vector3(4, 0, 1)
     );
 
+    Matrix2 temp(2, -1, 1, 1);
+    Matrix2 ninetyDegRot(0, -1, 1, 0);
+
+    Vector2 otherWorldVector(-1, 2);
+
     Vector3 transformed(4, 2, 5);
 
-    std::cout << Vector3::to_string(Matrix3::cramer_solve_transform(transform, transformed)) << std::endl;
+    Matrix2 composition = (temp * ninetyDegRot);
+
+    std::cout << Matrix2::to_string(composition) << std::endl;
 
     return 0;
 }

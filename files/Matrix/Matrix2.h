@@ -17,11 +17,13 @@ public:
 
     friend Vector2 operator*(const Vector2& v, const Matrix2& m);
     
-    Matrix2 operator*(Matrix2& other);
+    Matrix2 operator*(const Matrix2& other);
 
     static std::string to_string(Matrix2 composition);
 
     static float det2(Matrix2 mat2);
+
+    Matrix2* inverse();
 
     static Vector2 cramer_solve_transform(Matrix2 transformMat, Vector2 transformedCoords);
 };

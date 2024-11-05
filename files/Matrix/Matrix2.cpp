@@ -13,13 +13,13 @@ Vector2 operator*(const Vector2 &v, const Matrix2 &m)
     return Vector2((m.a * v.m_x) + (m.b * v.m_y), (m.c * v.m_x) + (m.d * v.m_y));
 }
 
-Matrix2 Matrix2::operator*(Matrix2 &other)
+Matrix2 Matrix2::operator*(const Matrix2 &other)
 {
     Vector2 ac(other.a, other.c);
     Vector2 bd(other.b, other.d);
     Vector2 resultA = ac * *this;
     Vector2 resultB = bd * *this;
-    return Matrix2(ac.m_x, bd.m_x, ac.m_y, bd.m_y);
+    return Matrix2(resultA.m_x, resultB.m_x, resultA.m_y, resultB.m_y);
 }
 
 std::string Matrix2::to_string(Matrix2 composition)
@@ -32,6 +32,14 @@ std::string Matrix2::to_string(Matrix2 composition)
 float Matrix2::det2(Matrix2 mat2)
 {
     return (mat2.a * mat2.d) - (mat2.b * mat2.c);
+}
+
+Matrix2* Matrix2::inverse()
+{
+    float detAp = det2(*this);
+    Matrix2* result = new Matrix2(d / detAp, -b / detAp, -c / detAp, a / detAp);
+    return result;
+    delete result;
 }
 
 Vector2 Matrix2::cramer_solve_transform(Matrix2 transformMat, Vector2 transformedCoords)

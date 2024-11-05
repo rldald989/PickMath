@@ -20,7 +20,7 @@ Vector3 operator*(const Vector3 &v, const Matrix3 &m)
         (m.rowC.x * v.x) + (m.rowC.y * v.y) + (m.rowC.z * v.z));
 }
 
-Matrix3 Matrix3::operator*(Matrix3 &other)
+Matrix3 Matrix3::operator*(const Matrix3 &other)
 {
 
     Vector3 columnA(other.rowA.x, other.rowB.x, other.rowC.x);

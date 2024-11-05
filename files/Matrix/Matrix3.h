@@ -16,7 +16,7 @@ public:
 
     friend Vector3 operator*(const Vector3& v, const Matrix3& m);
 
-    Matrix3 operator*(Matrix3& other);
+    Matrix3 operator*(const Matrix3& other);
 
     static std::string to_string(Matrix3 composition);
 

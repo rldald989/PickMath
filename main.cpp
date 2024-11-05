@@ -27,13 +27,11 @@ int main(){
     Matrix2 temp(2, -1, 1, 1);
     Matrix2 ninetyDegRot(0, -1, 1, 0);
 
-    Vector2 otherWorldVector(-1, 2);
+    Vector2 otherWorldVector(1, 2);
 
     Vector3 transformed(4, 2, 5);
 
-    Matrix2 composition = (temp * ninetyDegRot);
-
-    std::cout << Matrix2::to_string(composition) << std::endl;
+    std::cout << Vector2::to_string(otherWorldVector * temp * ninetyDegRot * *temp.inverse()) << std::endl;
 
     return 0;
 }

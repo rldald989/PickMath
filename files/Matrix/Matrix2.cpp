@@ -34,12 +34,11 @@ float Matrix2::det2(Matrix2 mat2)
     return (mat2.a * mat2.d) - (mat2.b * mat2.c);
 }
 
-Matrix2* Matrix2::inverse()
+Matrix2 Matrix2::inverse()
 {
     float detAp = det2(*this);
-    Matrix2* result = new Matrix2(d / detAp, -b / detAp, -c / detAp, a / detAp);
+    Matrix2 result = Matrix2(d / detAp, -b / detAp, -c / detAp, a / detAp);
     return result;
-    delete result;
 }
 
 Vector2 Matrix2::cramer_solve_transform(Matrix2 transformMat, Vector2 transformedCoords)

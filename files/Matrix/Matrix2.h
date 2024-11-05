@@ -23,7 +23,7 @@ public:
 
     static float det2(Matrix2 mat2);
 
-    Matrix2* inverse();
+    Matrix2 inverse();
 
     static Vector2 cramer_solve_transform(Matrix2 transformMat, Vector2 transformedCoords);
 };

@@ -31,7 +31,7 @@ int main(){
 
     Vector3 transformed(4, 2, 5);
 
-    std::cout << Vector2::to_string(otherWorldVector * temp * ninetyDegRot * *temp.inverse()) << std::endl;
+    std::cout << Vector2::to_string(otherWorldVector * temp * ninetyDegRot * temp.inverse()) << std::endl;
 
     return 0;
 }
